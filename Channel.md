@@ -1,0 +1,47 @@
+# Create and join a peer to a channel
+
+## Prerequisites
+
+* [Download and install the hyperledger fabric tools](Tools.md)
+* [Create the initial PeerOrg admin](Bootstrap.md)
+
+*In these examples, we will assume the new channel will be named `MyChannel`*
+
+## Generate a channel genesis block
+
+### Gather public keys into a MSP for genesis block creation
+
+*In these examples, we assume the PeerOrg admin has been enrolled and its MSP is in `PeerOrg/msp`*
+
+```shell
+mkdir -p MyChannel/msp/cacerts/ MyChannel/msp/admincerts/
+cp -f PeerOrg/msp/cacerts/*.pem MyChannel/msp/cacerts/
+cp -f PeerOrg/msp/signcerts/cert.pem MyChannel/msp/admincerts/
+```
+
+### Create `configtx.yaml`
+
+**TBD - Need to make a template for a user to download and modify?**
+
+### Generate genesis block and anchor peer update
+
+```shell
+mkdir -p artifacts/
+configtxgen -profile SingleMspChannel -outputCreateChannelTx artifacts/MyChannel.txn -channelID MyChannel
+configtxgen -profile SingleMspChannel -outputAnchorPeersUpdate artifacts/MyChannel-anchor-peers.txn -channelID MyChannel -asOrg PeerOrg
+```
+
+### Create/update/join channel
+
+*In these examples, `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`.*
+
+**TBD - This is taken from peer documentation, but it may have to be run on a peer itself. `hlf-database-app` makes this not needed since it contacts the peer(s) remotely and tells them to do their thing. Need to investigate further**
+
+```shell
+export NETWORK_ID="<NetworkID>"
+export CORE_PEER_LOCALMSPID="PeerOrg/msp"
+peer channel create -c MyChannel -f ./artifacts/MyChannel.txn -o orderer.${NETWORK_ID}.bdnodes.net:7050
+peer channel update -c MyChannel -f ./artifacts/MyChannel-anchor-peers.txn -o orderer.${NETWORK_ID}.bdnodes.net:7050
+peer channel fetch newest -c MyChannel
+peer channel join -b ./MyChannel.block
+```
