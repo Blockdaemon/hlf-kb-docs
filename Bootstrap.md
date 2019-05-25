@@ -8,7 +8,7 @@
 
 * [Download and install the hyperledger fabric tools](Tools.md)
 
-## Gathering the Blockdaemon HLF TLSCA public certificates
+## Fetch the Blockdaemon HLF TLSCA public certificate
 
 *In these examples, `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`.*
 

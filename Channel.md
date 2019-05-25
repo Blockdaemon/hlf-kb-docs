@@ -31,7 +31,7 @@ configtxgen -profile SingleMspChannel -outputCreateChannelTx artifacts/MyChannel
 configtxgen -profile SingleMspChannel -outputAnchorPeersUpdate artifacts/MyChannel-anchor-peers.txn -channelID MyChannel -asOrg PeerOrg
 ```
 
-### Create/update/join channel
+## Create/update/join channel
 
 *In these examples, `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`.*
 
