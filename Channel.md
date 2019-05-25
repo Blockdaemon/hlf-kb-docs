@@ -33,13 +33,16 @@ configtxgen -profile SingleMspChannel -outputAnchorPeersUpdate artifacts/MyChann
 
 ## Create/update/join channel
 
-*In these examples, `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`.*
+*In these examples, `<NodeID>` is the ID of the peer node and `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`. It will have to be done for every `<NodeID>` peer you wish to join to a channel*
 
-**TBD - This is taken from peer documentation, but it may have to be run on a peer itself. `hlf-database-app` makes this not needed since it contacts the peer(s) remotely and tells them to do their thing. Need to investigate further**
+**TBD - This is taken from peer documentation, but it may have to be run on a peer itself. `hlf-database-app` makes this not needed since it contacts the peer(s) remotely and tells them to do their thing. Need to investigate further. Setting `CORE_PEER_ADDRESS` should work but it is untested.**
 
 ```shell
-export NETWORK_ID="<NetworkID>"
+NODE_ID="<NodeID>"
+NETWORK_ID="<NetworkID>"
+
 export CORE_PEER_LOCALMSPID="PeerOrg/msp"
+export CORE_PEER_ADDRESS=peer-${NODE_ID}.${NETWORK_ID}.bdnodes.net:7051
 peer channel create -c MyChannel -f ./artifacts/MyChannel.txn -o orderer.${NETWORK_ID}.bdnodes.net:7050
 peer channel update -c MyChannel -f ./artifacts/MyChannel-anchor-peers.txn -o orderer.${NETWORK_ID}.bdnodes.net:7050
 peer channel fetch newest -c MyChannel
