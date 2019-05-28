@@ -43,6 +43,7 @@ NETWORK_ID="<NetworkID>"
 
 export CORE_PEER_LOCALMSPID="PeerOrg/msp"
 export CORE_PEER_ADDRESS=peer-${NODE_ID}.${NETWORK_ID}.bdnodes.net:7051
+export CORE_PEER_TLS_ENABLED=true
 peer channel create -c MyChannel -f ./artifacts/MyChannel.txn -o orderer.${NETWORK_ID}.bdnodes.net:7050
 peer channel update -c MyChannel -f ./artifacts/MyChannel-anchor-peers.txn -o orderer.${NETWORK_ID}.bdnodes.net:7050
 peer channel fetch newest -c MyChannel
