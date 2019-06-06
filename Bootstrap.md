@@ -15,9 +15,8 @@
 ```shell
 NETWORK_ID="<NetworkID>"
 
-curl -sk https://ca-server.${NETWORK_ID}.bdnodes.net:7054 \
-  | jq -r ".result.CAChain" \
-  | base64 -d > tlcsa-${NETWORK_ID}.pem
+curl -sk https://ca-server.${NETWORK_ID}.bdnodes.net:7054/api/v1/cainfo \
+  | jq -r ".result.CAChain" | base64 -d > tlcsa-${NETWORK_ID}.pem
 ```
 
 For MacOS, `base64 -D` may be required
