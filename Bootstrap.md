@@ -6,6 +6,10 @@
 
 ## Prerequisites
 
+* Install `jq`
+  * MacOS: `brew install jq`
+  * Linux: `sudo apt install jq`
+
 * [Download and install the hyperledger fabric tools](Tools.md)
 
 ## Fetch the Blockdaemon HLF TLSCA public certificate
@@ -15,11 +19,18 @@
 ```shell
 NETWORK_ID="<NetworkID>"
 
-curl -sk https://ca-server.${NETWORK_ID}.bdnodes.net:7054/api/v1/cainfo \
-  | jq -r ".result.CAChain" | base64 -d > tlcsa-${NETWORK_ID}.pem
+curl -sSk https://ca-server.${NETWORK_ID}.bdnodes.net:7054/api/v1/cainfo \
+  | jq -r ".result.CAChain" | base64 -d > tlsca-${NETWORK_ID}.pem
 ```
 
 For MacOS, `base64 -D` may be required
+
+Make sure the `pem` has data
+```shell
+openssl x509 -noout -text -in tlcsa-${NETWORK_ID}.pem
+```
+
+*If this fails, please contact technical support.*
 
 ## Enroll the CA admin and initial PeerOrg admin
 
@@ -57,7 +68,7 @@ export FABRIC_CA_CLIENT_CANAME="ca-peer-org"
 fabric-ca-client register \
   -u "https://ca-server.${NETWORK_ID}.bdnodes.net:7054" \
   --id.type=user \
-  --id.name Admin@${NETWORK_ID}-PeerOrg
+  --id.name Admin@${NETWORK_ID}-peerOrg
 ```
 
 You should see:
@@ -79,8 +90,8 @@ mkdir -p PeerAdmin
 export FABRIC_CA_CLIENT_TLS_CERTFILES="${PWD}/tlsca-${NETWORK_ID}.pem"
 export FABRIC_CA_CLIENT_CANAME="ca-peer-org"
 fabric-ca-client enroll \
-  -u "https://Admin@${NETWORK_ID}-PeerOrg:${PASSWORD}@ca-server.${NETWORK_ID}.bdnodes.net:7054" \
-  -H PeerAdmin --csr_names="O=${NETWORK_ID}-PeerOrg"
+  -u "https://Admin@${NETWORK_ID}-peerOrg:${PASSWORD}@ca-server.${NETWORK_ID}.bdnodes.net:7054" \
+  -H PeerAdmin --csr.names="O=${NETWORK_ID}-peerOrg"
 ```
 
 ***IMPORTANT!***
