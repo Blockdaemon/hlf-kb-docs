@@ -34,18 +34,22 @@ openssl x509 -noout -text -in tlcsa-${NETWORK_ID}.pem
 
 ## Enroll the CA admin and initial PeerOrg admin
 
+### Prepare the enviroment
+```shell
+NETWORK_ID="<NetworkID>"
+export FABRIC_CA_CLIENT_TLS_CERTFILES="${PWD}/tlsca-${NETWORK_ID}.pem"
+export FABRIC_CA_CLIENT_CANAME="ca-peer-org"
+```
+
 ### Enroll the CA admin
 
 *In this example, `<ca_admin_user>` and `<ca_admin_pass>` are the credentials shown on the Network connect page. Omit the `<>`'s, e.g. `CA_USER="admin"`.*
 
 ```shell
 
-NETWORK_ID="<NetworkID>"
 CA_USER="<ca_admin_user>"
 CA_PASS="<ca_admin_pass>"
 
-export FABRIC_CA_CLIENT_TLS_CERTFILES="${PWD}/tlsca-${NETWORK_ID}.pem"
-export FABRIC_CA_CLIENT_CANAME="ca-peer-org"
 fabric-ca-client enroll \
   -u "https://${CA_USER}:${CA_PASS}@ca-server.${NETWORK_ID}.bdnodes.net:7054"
 ```
@@ -61,10 +65,6 @@ fabric-ca-client enroll \
 Register the new PeerOrg admin. Its password will be printed on stdout:
 
 ```shell
-NETWORK_ID="<NetworkID>"
-
-export FABRIC_CA_CLIENT_TLS_CERTFILES="${PWD}/tlsca-${NETWORK_ID}.pem"
-export FABRIC_CA_CLIENT_CANAME="ca-peer-org"
 fabric-ca-client register \
   -u "https://ca-server.${NETWORK_ID}.bdnodes.net:7054" \
   --id.type=user \
@@ -82,13 +82,10 @@ Enroll the initial PeerOrg admin, and generate an MSP directory structure in Pee
 *In this example, `<RegisterPassword>` is the password printed on stdout from the command above. Omit the `<>`'s, e.g. `PASSWORD="abcdefgh"`*
 
 ```shell
-NETWORK_ID="<NetworkID>"
 PASSWORD="<RegisterPassword>"
 
 mkdir -p PeerAdmin
 
-export FABRIC_CA_CLIENT_TLS_CERTFILES="${PWD}/tlsca-${NETWORK_ID}.pem"
-export FABRIC_CA_CLIENT_CANAME="ca-peer-org"
 fabric-ca-client enroll \
   -u "https://Admin@${NETWORK_ID}-peerOrg:${PASSWORD}@ca-server.${NETWORK_ID}.bdnodes.net:7054" \
   -H PeerAdmin --csr.names="O=${NETWORK_ID}-peerOrg"
