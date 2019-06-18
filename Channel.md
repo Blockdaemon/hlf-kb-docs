@@ -11,12 +11,12 @@
 
 ### Gather public keys into a MSP for genesis block creation
 
-*In these examples, we assume the PeerOrg admin has been enrolled and its MSP is in `PeerOrg/msp`*
+*In these examples, we assume the PeerOrg admin has been enrolled and its MSP is in `PeerAdmin/msp`*
 
 ```shell
 mkdir -p MyChannel/msp/cacerts/ MyChannel/msp/admincerts/
-cp -f PeerOrg/msp/cacerts/*.pem MyChannel/msp/cacerts/
-cp -f PeerOrg/msp/signcerts/cert.pem MyChannel/msp/admincerts/
+cp -f PeerAdmin/msp/cacerts/*.pem MyChannel/msp/cacerts/
+cp -f PeerAdmin/msp/signcerts/cert.pem MyChannel/msp/admincerts/
 ```
 
 ### Create `configtx.yaml`
@@ -27,8 +27,8 @@ cp -f PeerOrg/msp/signcerts/cert.pem MyChannel/msp/admincerts/
 
 ```shell
 mkdir -p artifacts/
-configtxgen -profile SingleMspChannel -outputCreateChannelTx artifacts/MyChannel.txn -channelID MyChannel
-configtxgen -profile SingleMspChannel -outputAnchorPeersUpdate artifacts/MyChannel-anchor-peers.txn -channelID MyChannel -asOrg PeerOrg
+configtxgen -configPath $PWD -profile SingleMspChannel -outputCreateChannelTx artifacts/MyChannel.txn -channelID MyChannel
+configtxgen -configPath $PWD -profile SingleMspChannel -outputAnchorPeersUpdate artifacts/MyChannel-anchor-peers.txn -channelID MyChannel -asOrg PeerOrg
 ```
 
 ## Create/update/join channel
@@ -41,7 +41,7 @@ configtxgen -profile SingleMspChannel -outputAnchorPeersUpdate artifacts/MyChann
 NODE_ID="<NodeID>"
 NETWORK_ID="<NetworkID>"
 
-export CORE_PEER_LOCALMSPID="PeerOrg/msp"
+export CORE_PEER_LOCALMSPID="PeerAdmin/msp"
 export CORE_PEER_ADDRESS="peer-${NODE_ID}.${NETWORK_ID}.bdnodes.net:7051"
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_TLS_ROOTCERT_FILE="${PWD}/tlsca-${NETWORK_ID}.pem"
