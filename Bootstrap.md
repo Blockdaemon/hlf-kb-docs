@@ -27,7 +27,7 @@ For MacOS, `base64 -D` may be required
 
 Make sure the `pem` has data
 ```shell
-openssl x509 -noout -text -in tlcsa-${NETWORK_ID}.pem
+openssl x509 -noout -text -in tlsca-${NETWORK_ID}.pem
 ```
 
 *If this fails, please contact technical support.*
