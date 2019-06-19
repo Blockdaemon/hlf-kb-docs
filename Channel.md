@@ -45,8 +45,8 @@ cp hlf-kb-docs/configtx.yaml .
 
 ```shell
 mkdir -p artifacts/
-configtxgen -configPath $PWD -profile SingleMspChannel -outputCreateChannelTx artifacts/MyChannel.txn -channelID MyChannel
-configtxgen -configPath $PWD -profile SingleMspChannel -outputAnchorPeersUpdate artifacts/MyChannel-anchor-peers.txn -channelID MyChannel -asOrg PeerOrg
+configtxgen -configPath $PWD -profile SingleMSPChannel -outputCreateChannelTx artifacts/MyChannel.txn -channelID MyChannel
+configtxgen -configPath $PWD -profile SingleMSPChannel -outputAnchorPeersUpdate artifacts/MyChannel-anchor-peers.txn -channelID MyChannel -asOrg PeerOrg
 ```
 
 ## Create/update/join channel
