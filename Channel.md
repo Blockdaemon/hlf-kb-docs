@@ -29,7 +29,7 @@ cd hlf-kb-docs
 cp config.env-example config.env
 ```
 
-*Edit `config.env`. Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS` to a quote enclosed, space separated list of `<NodeID>`s*
+*Edit `config.env`. Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS` to a quote enclosed, space separated list of at least two `<NodeID>`s*
 
 #### Make a `configtx.yaml` and copy it to your working directory:
 
