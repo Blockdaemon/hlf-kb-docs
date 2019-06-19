@@ -1,0 +1,73 @@
+---
+Capabilities:
+    Global: &ChannelCapabilities
+        V1_1: true
+    Application: &ApplicationCapabilities
+        V1_3: true
+
+Organizations:
+    - &PeerOrg
+        Name: PeerOrg
+        ID: {{env.NETWORK_ID}}-peerOrg
+        MSPDir: ./MyChannel/msp
+        AdminPrincipal: Role.ADMIN
+        AnchorPeers:
+        {% for xid in env.ANCHOR_PEERS.split() %}
+            - Host: peer-{{ xid }}.{{env.NETWORK_ID}}.bdnodes.net
+              Port: 7051
+        {% endfor %}
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('{{env.NETWORK_ID}}-peerOrg.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('{{env.NETWORK_ID}}-peerOrg.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('{{env.NETWORK_ID}}-peerOrg.admin')"
+
+Channel: &ChannelDefaults
+    Policies:
+        # Who may invoke the 'Deliver' API
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        # Who may invoke the 'Broadcast' API
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        # By default, who may modify elements at this config level
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+
+Application: &ApplicationDefaults
+    Organizations:
+    Policies: &ApplicationDefaultPolicies
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ApplicationCapabilities
+
+Profiles:
+    SingleMSPChannel:
+        <<: *ChannelDefaults
+        Capabilities:
+            <<: *ChannelCapabilities
+        Consortium: {{env.NETWORK_ID}}-Consortium
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *PeerOrg
+            Capabilities:
+                <<: *ApplicationCapabilities

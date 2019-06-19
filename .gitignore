@@ -1,0 +1,3 @@
+*.swp
+/configtx.yaml
+/config.env
