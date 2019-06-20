@@ -9,7 +9,7 @@ Organizations:
     - &PeerOrg
         Name: PeerOrg
         ID: {{env.NETWORK_ID}}-peerOrg
-        MSPDir: ./MyChannel/msp
+        MSPDir: ./mychannel/msp
         AdminPrincipal: Role.ADMIN
         AnchorPeers:
         {% for xid in env.ANCHOR_PEERS.split() %}
