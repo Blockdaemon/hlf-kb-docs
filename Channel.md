@@ -57,12 +57,23 @@ configtxgen -configPath $PWD -profile SingleMSPChannel -outputAnchorPeersUpdate 
 NODE_ID="<NodeID>"
 NETWORK_ID="<NetworkID>"
 
-export CORE_PEER_LOCALMSPID="PeerAdmin/msp"
+export CORE_PEER_MSPCONFIGPATH="PeerAdmin/msp"
+export CORE_PEER_LOCALMSPID="${NETWORK_ID}-peerOrg"
 export CORE_PEER_ADDRESS="peer-${NODE_ID}.${NETWORK_ID}.bdnodes.net:7051"
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_TLS_ROOTCERT_FILE="${PWD}/tlsca-${NETWORK_ID}.pem"
+
+touch core.yaml
 peer channel create -c MyChannel -f ./artifacts/MyChannel.txn -o orderer.${NETWORK_ID}.bdnodes.net:7050
 peer channel update -c MyChannel -f ./artifacts/MyChannel-anchor-peers.txn -o orderer.${NETWORK_ID}.bdnodes.net:7050
 peer channel fetch newest -c MyChannel
 peer channel join -b ./MyChannel.block
 ```
+
+If you are familiar with bash you can also wrap the above with:
+```shell
+ANCHOR_PEERS="<NodeID> <NodeID> ..."
+for NODE_ID in $ANCHOR_PEERS; do
+...
+done
+````
