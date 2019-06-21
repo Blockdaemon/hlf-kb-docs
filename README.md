@@ -11,14 +11,14 @@
 
 ### MacOS
 
-```bash
+```shell
 brew install python3
 pip3 install jinja2
 ```
 
 ### Ubuntu/Debian
 
-```bash
+```shell
 sudo apt install python3-jinja2
 ```
 
@@ -26,7 +26,7 @@ sudo apt install python3-jinja2
 
 Instead of following all the documents above, you can use the premade quickstart utilities here. You will still need to [get the Hyperledger Fabric tools](Tools.md) before starting this process.
 
-```bash
+```shell
 cp config.env-example config.env
 ```
 
@@ -34,14 +34,16 @@ Configure `config.env`
 
 Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS` to a quote enclosed, space separated list of at least two `<NodeID>`s (see [Creating a channel](Channel.md) for details).
 
-```bash
+```shell
 make
-./bootstrap.sh
+CA_USER="<ca_admin_user>" CA_PASS="<ca_admin_pass>" ./bootstrap.sh
 ```
+
+*In this example, `<ca_admin_user>` and `<ca_admin_pass>` are the credentials shown on the Network connect page. Omit the `<>`'s, e.g. `CA_USER="admin"`.*
 
 Note given password
 
-```
+```shell
 PASSWORD="password-from-above" ./enroll.sh
 ./channel.sh
 ```
