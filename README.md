@@ -30,7 +30,9 @@ Instead of following all the documents above, you can use the premade quickstart
 cp config.env-example config.env
 ```
 
-Configure `config.env` (see [Creating a channel](Channel.md) for details)
+Configure `config.env`
+
+Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS` to a quote enclosed, space separated list of at least two `<NodeID>`s (see [Creating a channel](Channel.md) for details).
 
 ```bash
 make

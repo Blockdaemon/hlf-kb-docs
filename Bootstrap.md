@@ -1,8 +1,10 @@
 # Bootstrapping the initial PeerOrg admin user
 
+***This documents the sequence of commands in `bootstrap.sh` and `enroll.sh`.***
+
 ***IMPORTANT!***
 
-*Your new Hyperledger Fabric Network will not be up and running until you create an initial PeerOrg admin user!*
+*Your new Hyperledger Fabric Network will not be up and running until you create and enroll an initial PeerOrg admin user!*
 
 ## Prerequisites
 
@@ -63,8 +65,6 @@ fabric-ca-client enroll \
 
 ### Register and enroll the PeerOrg admin
 
-***TBD - Not sure if `FABRIC_CA_CLIENT_` vars are needed for `fabric-ca-client register`, they might be stored in the local admin MSP during the above enroll"?***
-
 ***IMPORTANT!***
 
 *This `fabric-ca-client register/enroll` step can only be done once! Once you have registered the PeerOrg Admin user, you cannot reregister it again unless you remove the existing one first with `fabric-ca-client identity remove`. If a new PeerOrg admin is `enrolled`, any existing peers or orderers that identify the original identity as an admin cannot be updated, but only new peers will indentify the new identity as an admin!*
@@ -86,7 +86,7 @@ Password: abcdefgh
 
 Enroll the initial PeerOrg admin, and generate an MSP directory structure in PeerAdmin/msp:
 
-*In this example, `<RegisterPassword>` is the password printed on stdout from the command above. Omit the `<>`'s, e.g. `PASSWORD="abcdefgh"`*
+*In this example, `<RegisterPassword>` is the password printed on stdout from the command above. Omit the `<>`'s, e.g. `PASSWORD="abcdefgh"`.*
 
 ```shell
 PASSWORD="<RegisterPassword>"
@@ -96,6 +96,8 @@ mkdir -p PeerAdmin
 fabric-ca-client enroll \
   -u "https://Admin@${NETWORK_ID}-peerOrg:${PASSWORD}@ca-server.${NETWORK_ID}.bdnodes.net:7054" \
   -H PeerAdmin --csr.names="O=${NETWORK_ID}-peerOrg"
+
+unset PASSWORD
 ```
 
 ***IMPORTANT!***
