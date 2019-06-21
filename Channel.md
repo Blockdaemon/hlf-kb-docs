@@ -40,6 +40,7 @@ make
 mkdir -p mychannel/msp/cacerts/ mychannel/msp/admincerts/
 cp -f PeerAdmin/msp/cacerts/*.pem mychannel/msp/cacerts/
 cp -f PeerAdmin/msp/signcerts/cert.pem mychannel/msp/admincerts/
+
 mkdir -p artifacts/
 configtxgen -configPath $PWD -profile SingleMSPChannel -outputCreateChannelTx artifacts/mychannel.txn -channelID mychannel
 configtxgen -configPath $PWD -profile SingleMSPChannel -outputAnchorPeersUpdate artifacts/mychannel-anchor-peers.txn -channelID mychannel -asOrg PeerOrg
@@ -50,11 +51,10 @@ configtxgen -configPath $PWD -profile SingleMSPChannel -outputAnchorPeersUpdate 
 *Note that fetch/join has to be done for every `<NodeID>` peer you wish to join to a channel, as specified in the `config.env` `ANCHOR_PEERS` setting for the `configtx.yaml` created above.*
 
 ```shell
-ANCHOR_PEERS="<NodeID> <NodeID> .."
-NETWORK_ID="<NetworkID>"
-
 mkdir -p PeerAdmin/msp/admincerts
 cp -f PeerAdmin/msp/signcerts/* PeerAdmin/msp/admincerts
+
+. config.env
 
 export FABRIC_CFG_PATH=$PWD
 export CORE_PEER_MSPCONFIGPATH="PeerAdmin/msp"
