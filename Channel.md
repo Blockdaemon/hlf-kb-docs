@@ -58,7 +58,7 @@ cp -f PeerAdmin/msp/signcerts/* PeerAdmin/msp/admincerts
 
 ## Create/update/join channel
 
-*Note that `peer channel create/update` only has to be done ***once*** (in this example, for the first `<NodeID>` in `ANCHOR_PEERS`), but `peer join` has to be done for ***each*** `<NodeID>` in `ANCHOR_PEERS` we specified in `configtx.yaml` via `config.env`.*
+*Note that `peer channel create/update` only has to be done **once** (in this example, for the first `<NodeID>` in `ANCHOR_PEERS`), but `peer join` has to be done for **each** `<NodeID>` in `ANCHOR_PEERS` we specified in `configtx.yaml` via `config.env`.*
 
 ```shell
 . config.env
