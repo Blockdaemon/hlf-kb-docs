@@ -34,13 +34,13 @@ make configtx.yaml
 
 ### Gather public keys into a MSP for genesis block creation
 
-This adds the PeerAdmin to the new channel as an `ADMIN` by putting its public key into `msp/admincerts`
-
 ```shell
 mkdir -p mychannel/msp/cacerts/ mychannel/msp/admincerts/
 cp -f PeerAdmin/msp/cacerts/*.pem mychannel/msp/cacerts/
 cp -f PeerAdmin/msp/signcerts/cert.pem mychannel/msp/admincerts/
 ```
+
+This adds the PeerAdmin to the new channel as an `ADMIN` by putting its public key into `msp/admincerts`
 
 ### Generate genesis block and anchor peer update
 
