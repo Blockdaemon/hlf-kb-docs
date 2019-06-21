@@ -53,6 +53,9 @@ configtxgen -configPath $PWD -profile SingleMSPChannel -outputAnchorPeersUpdate 
 ANCHOR_PEERS="<NodeID> <NodeID> .."
 NETWORK_ID="<NetworkID>"
 
+mkdir -p PeerAdmin/msp/admincerts
+cp -f PeerAdmin/msp/signcerts/* PeerAdmin/msp/admincerts
+
 export FABRIC_CFG_PATH=$PWD
 export CORE_PEER_MSPCONFIGPATH="PeerAdmin/msp"
 export CORE_PEER_LOCALMSPID="${NETWORK_ID}-peerOrg"
