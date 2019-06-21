@@ -24,7 +24,7 @@ cp config.env-example config.env
 Now edit `config.env`. Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS` to a quote enclosed, space separated list of at least two `<NodeID>`s.
 
 *In these examples, `<NodeID>` is the ID of a peer node and `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`.
-`ANCHOR_PEERS` should have at leleast two nodes!*
+`ANCHOR_PEERS` should have at least two nodes!*
 
 #### Generate `configtx.yaml` using parameters from `config.env`
 
