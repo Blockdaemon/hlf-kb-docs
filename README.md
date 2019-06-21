@@ -7,7 +7,7 @@
 * [Creating a channel](Channel.md)
 * [Installing and executing chaincode](Chaincode.md)
 
-## `configtx.yaml` creation wizard requirements
+## Prerequisites
 
 ### MacOS
 
@@ -22,22 +22,22 @@ pip3 install jinja2
 sudo apt install python3-jinja2
 ```
 
-## Prefab workflow
+## QUICKSTART
 
-Instead of following all the documents above, you can use the premade utilities here. You will still need to [get the Hyperledger Fabric tools](Tools.md) before starting this process.
+Instead of following all the documents above, you can use the premade quickstart utilities here. You will still need to [get the Hyperledger Fabric tools](Tools.md) before starting this process.
 
 ```bash
 cp config.env-example config.env
 ```
 
-Edit `config.env`
+Configure `config.env` (see [Creating a channel](Channel.md) for details)
 
 ```bash
 make
-./bootstrap
+./bootstrap.sh
 ```
 
-Note password
+Note given password
 
 ```
 PASSWORD="password-from-above" ./enroll.sh
