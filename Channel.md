@@ -28,7 +28,7 @@ Now edit `config.env`. Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS
 
 #### Generate `configtx.yaml` using parameters from `config.env`
 
-```
+```shell
 make configtx.yaml
 ```
 
