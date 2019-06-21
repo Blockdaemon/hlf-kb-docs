@@ -50,15 +50,15 @@ configtxgen -configPath $PWD -profile SingleMSPChannel -outputCreateChannelTx ar
 configtxgen -configPath $PWD -profile SingleMSPChannel -outputAnchorPeersUpdate artifacts/mychannel-anchor-peers.txn -channelID mychannel -asOrg PeerOrg
 ```
 
-## Make the PeerAdmin an admin of the local peer instances we will be running
+## Create/update/join channel
+
+### Make the PeerAdmin an admin of the local peer instances we will be running
 ```shell
 mkdir -p PeerAdmin/msp/admincerts
 cp -f PeerAdmin/msp/signcerts/* PeerAdmin/msp/admincerts
 ```
 
-## Create/update/join channel
-
-*Note that `peer channel create/update` only has to be done **once** (in this example, for the first `<NodeID>` in `ANCHOR_PEERS`), but `peer join` has to be done for **each** `<NodeID>` in `ANCHOR_PEERS` we specified in `configtx.yaml` via `config.env`.*
+### Set up environment
 
 ```shell
 . config.env
@@ -68,11 +68,21 @@ export CORE_PEER_MSPCONFIGPATH="PeerAdmin/msp"
 export CORE_PEER_LOCALMSPID="${NETWORK_ID}-peerOrg"
 export CORE_PEER_TLS_ENABLED=true
 export CORE_PEER_TLS_ROOTCERT_FILE="${PWD}/tlsca-${NETWORK_ID}.pem"
+```
 
+### Create/update channel
+
+*Note that `peer channel create/update` only has to be done **once** (in this example, for the first `<NodeID>` in `ANCHOR_PEERS`), but `peer join` has to be done for **each** `<NodeID>` in `ANCHOR_PEERS` we specified in `configtx.yaml` via `config.env`.*
+
+```shell
 export CORE_PEER_ADDRESS="peer-${ANCHOR_PEERS[0]}.${NETWORK_ID}.bdnodes.net:7051"
 peer channel create -c mychannel -f ./artifacts/mychannel.txn --tls -o orderer.${NETWORK_ID}.bdnodes.net:7050 --cafile=${CORE_PEER_TLS_ROOTCERT_FILE}
 peer channel update -c mychannel -f ./artifacts/mychannel-anchor-peers.txn --tls -o orderer.${NETWORK_ID}.bdnodes.net:7050 --cafile=${CORE_PEER_TLS_ROOTCERT_FILE}
+```
 
+### Join anchor peers to channel
+
+```shell
 for NODE_ID in $ANCHOR_PEERS; do
     export CORE_PEER_ADDRESS="peer-${NODE_ID}.${NETWORK_ID}.bdnodes.net:7051"
     peer channel join -b ./mychannel.block
