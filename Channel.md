@@ -9,15 +9,13 @@
 
 ## Generate a channel genesis block
 
-### Gather public keys into a MSP for genesis block creation
+*Consult the [README](README.md) for system requirements*
+
+### Gather public keys into a MSP for genesis block creation and create `configtx.yaml`
 
 This adds the PeerAdmin to the new channel as an `ADMIN` by putting its public key into `msp/admincerts`
 
 *In these examples, we assume the PeerOrg admin has been enrolled and its MSP is in `PeerAdmin/msp`*
-
-### Create `configtx.yaml`
-
-*Consult the [README](README.md) for system requirements*
 
 ```shell
 cp config.env-example config.env
@@ -28,7 +26,7 @@ Edit `config.env`. Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS` to
 *In these examples, `<NodeID>` is the ID of a peer node and `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`.
 `ANCHOR_PEERS` should have at leleast two nodes!*
 
-#### Make a `configtx.yaml` and copy it to your working directory:
+#### Make a `configtx.yaml`
 
 ```
 make
@@ -68,7 +66,6 @@ peer channel update -c mychannel -f ./artifacts/mychannel-anchor-peers.txn --tls
 
 for NODE_ID in $ANCHOR_PEERS; do
     export CORE_PEER_ADDRESS="peer-${NODE_ID}.${NETWORK_ID}.bdnodes.net:7051"
-    peer channel fetch newest -c mychannel
     peer channel join -b ./mychannel.block
 done
 ```

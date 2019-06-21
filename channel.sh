@@ -24,6 +24,5 @@ peer channel update -c mychannel -f ./artifacts/mychannel-anchor-peers.txn --tls
 for NODE_ID in $ANCHOR_PEERS; do
     export CORE_PEER_ADDRESS="peer-${NODE_ID}.${NETWORK_ID}${ENV}.bdnodes.net:7051"
     echo "Joining peer-${NODE_ID} to $CHANNEL"
-    peer channel fetch newest -c mychannel
     peer channel join -b ./mychannel.block
 done
