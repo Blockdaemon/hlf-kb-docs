@@ -7,10 +7,20 @@
 *Your new Hyperledger Fabric Network will not be up and running until you create and enroll an initial PeerOrg admin user!*
 
 ## Prerequisites
+* Install `python3`, `jinja2`, and `jq`
 
-* Install `jq`
-  * MacOS: `brew install jq`
-  * Linux: `sudo apt install jq`
+MacOS:
+
+```shell
+brew install jq python3
+pip3 install jinja2
+```
+
+Ubuntu/Debian:
+
+```shell
+sudo apt install jq python3-jinja2
+```
 
 * [Download and install the hyperledger fabric tools](Tools.md)
 
