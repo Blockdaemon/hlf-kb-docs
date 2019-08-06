@@ -18,10 +18,10 @@ export CORE_PEER_TLS_ROOTCERT_FILE="${PWD}/tlsca-${NETWORK_ID}.pem"
 echo "Creating $CHANNEL"
 export CORE_PEER_ADDRESS="peer-${ANCHOR_PEERS[0]}.${NETWORK_ID}${ENV}.bdnodes.net:7051"
 peer channel create -c mychannel -f ./artifacts/mychannel.txn --tls -o orderer.${NETWORK_ID}${ENV}.bdnodes.net:7050 --cafile=${CORE_PEER_TLS_ROOTCERT_FILE}
-echo "Adding ${ANCHOR_PEERS} to $CHANNEL"
+echo "Adding all ANCHOR_PEERS to $CHANNEL"
 peer channel update -c mychannel -f ./artifacts/mychannel-anchor-peers.txn --tls -o orderer.${NETWORK_ID}${ENV}.bdnodes.net:7050 --cafile=${CORE_PEER_TLS_ROOTCERT_FILE}
 
-for NODE_ID in $ANCHOR_PEERS; do
+for NODE_ID in "${ANCHOR_PEERS[@]}"; do
     export CORE_PEER_ADDRESS="peer-${NODE_ID}.${NETWORK_ID}${ENV}.bdnodes.net:7051"
     echo "Joining peer-${NODE_ID} to $CHANNEL"
     peer channel join -b ./mychannel.block

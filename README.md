@@ -36,10 +36,10 @@ Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS` to a quote enclosed, 
 
 ```shell
 make
-CA_USER="<ca_admin_user>" CA_PASS="<ca_admin_pass>" ./bootstrap.sh
+CA_USER="ca_admin_user" CA_PASS="ca_admin_pass" ./bootstrap.sh
 ```
 
-*In this example, `<ca_admin_user>` and `<ca_admin_pass>` are the credentials shown on the Network connect page. Omit the `<>`'s, e.g. `CA_USER="admin"`.*
+*In this example, `ca_admin_user` and `ca_admin_pass` are the credentials shown on the Network connect page.*
 
 Note given password
 

@@ -33,10 +33,10 @@ cd hlf-kb-docs
 
 ## Fetch the Blockdaemon HLF TLSCA public certificate
 
-*In these examples, `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`.*
+*In these examples, `NetworkID` is the ID of the network as shown in the Network connect page.*
 
 ```shell
-NETWORK_ID="<NetworkID>"
+NETWORK_ID="NetworkID"
 
 curl -sSk https://ca-server.${NETWORK_ID}.bdnodes.net:7054/api/v1/cainfo \
   | jq -r ".result.CAChain" | base64 -d > tlsca-${NETWORK_ID}.pem
@@ -55,19 +55,19 @@ openssl x509 -noout -text -in tlsca-${NETWORK_ID}.pem
 
 ### Prepare the enviroment
 ```shell
-NETWORK_ID="<NetworkID>"
+NETWORK_ID="NetworkID"
 export FABRIC_CA_CLIENT_TLS_CERTFILES="${PWD}/tlsca-${NETWORK_ID}.pem"
 export FABRIC_CA_CLIENT_CANAME="ca-peer-org"
 ```
 
 ### Enroll the CA admin
 
-*In this example, `<ca_admin_user>` and `<ca_admin_pass>` are the credentials shown on the Network connect page. Omit the `<>`'s, e.g. `CA_USER="admin"`.*
+*In this example, `ca_admin_user` and `ca_admin_pass` are the credentials shown on the Network connect page.*
 
 ```shell
 
-CA_USER="<ca_admin_user>"
-CA_PASS="<ca_admin_pass>"
+CA_USER="ca_admin_user"
+CA_PASS="ca_admin_pass"
 
 fabric-ca-client enroll \
   -u "https://${CA_USER}:${CA_PASS}@ca-server.${NETWORK_ID}.bdnodes.net:7054"
@@ -96,10 +96,10 @@ Password: abcdefgh
 
 Enroll the initial PeerOrg admin, and generate an MSP directory structure in PeerAdmin/msp:
 
-*In this example, `<RegisterPassword>` is the password printed on stdout from the command above. Omit the `<>`'s, e.g. `PASSWORD="abcdefgh"`.*
+*In this example, `RegisterPassword` is the password printed on stdout from the command above.*
 
 ```shell
-PASSWORD="<RegisterPassword>"
+PASSWORD="RegisterPassword"
 
 mkdir -p PeerAdmin
 

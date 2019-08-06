@@ -21,9 +21,9 @@ Create `config.env` from the example:
 cp config.env-example config.env
 ```
 
-Now edit `config.env`. Set `NETWORK_ID` to your `<NetworkID>`, and `ANCHOR_PEERS` to a quote enclosed, space separated list of at least two `<NodeID>`s.
+Now edit `config.env`. Set `NETWORK_ID` to your `NetworkID`, and `ANCHOR_PEERS` to a parenthesis enclosed, space separated list of at least two `NodeID`s.
 
-*In these examples, `<NodeID>` is the ID of a peer node and `<NetworkID>` is the ID of the network as shown in the Network connect page. Omit the `<>`'s, e.g. `NETWORK_ID="abcdefgh"`.
+*In these examples, `NodeID` is the ID of a peer node and `NetworkID` is the ID of the network as shown in the Network connect page.*
 `ANCHOR_PEERS` should have at least two nodes!*
 
 #### Generate `configtx.yaml` using parameters from `config.env`
@@ -72,7 +72,7 @@ export CORE_PEER_TLS_ROOTCERT_FILE="${PWD}/tlsca-${NETWORK_ID}.pem"
 
 ### Create/update channel
 
-*Note that `peer channel create/update` only has to be done **once** (in this example, for the first `<NodeID>` in `ANCHOR_PEERS`), but `peer join` has to be done for **each** `<NodeID>` in `ANCHOR_PEERS` we specified in `configtx.yaml` via `config.env`.*
+*Note that `peer channel create/update` only has to be done **once** (in this example, for the first `NodeID` in `ANCHOR_PEERS`, but `peer join` has to be done for **each** `NodeID` in `ANCHOR_PEERS` we specified in `configtx.yaml` via `config.env`.*
 
 ```shell
 export CORE_PEER_ADDRESS="peer-${ANCHOR_PEERS[0]}.${NETWORK_ID}.bdnodes.net:7051"
@@ -83,7 +83,7 @@ peer channel update -c mychannel -f ./artifacts/mychannel-anchor-peers.txn --tls
 ### Join anchor peers to channel
 
 ```shell
-for NODE_ID in $ANCHOR_PEERS; do
+for NODE_ID in "${ANCHOR_PEERS[@]}"; do
     export CORE_PEER_ADDRESS="peer-${NODE_ID}.${NETWORK_ID}.bdnodes.net:7051"
     peer channel join -b ./mychannel.block
 done
